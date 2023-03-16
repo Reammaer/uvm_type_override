@@ -25,7 +25,17 @@ endfunction: new
 
 
 function void base_test::build_phase(uvm_phase phase);
+    // Get handle to the singleton factory instance
+    uvm_factory factory = uvm_factory::get();
+
     super.build_phase(phase);
+
+    // Set factory to override "driver" by "child_driver" by type
+    set_type_override_by_type(driver::get_type(), child_driver::get_type());
+
+    // Set factory to override "driver" by "child_driver" by name
+    // factory.set_type_override_by_name("driver", "child_driver");
+
     // Create a new environment
     env_h = environment::type_id::create("env_h", this);
     // Get interface from the tb
@@ -35,7 +45,11 @@ function void base_test::build_phase(uvm_phase phase);
     // Connect interface to other uvm components
     uvm_config_db#(virtual dut_if)::set(this, "*", "dut_if", vif);
     // Create a new sequence library
-    base_sequence_h = base_sequence::type_id::create("base_sequence_h");    
+    base_sequence_h = base_sequence::type_id::create("base_sequence_h");  
+
+    // Print factory configuration
+    factory.print();
+
 endfunction: build_phase
 
 task base_test::run_phase(uvm_phase phase);

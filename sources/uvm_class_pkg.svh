@@ -10,6 +10,7 @@ package uvm_class_pkg;
 
     `include "uvm_classes/base_sequence.sv"
     `include "uvm_classes/driver.sv"
+    `include "uvm_classes/child_driver.sv"
     `include "uvm_classes/agent.sv"
     `include "uvm_classes/environment.sv"
     `include "uvm_classes/base_test.sv"
